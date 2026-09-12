@@ -10,7 +10,7 @@ Use the PromptWorkshop MCP tools to turn a rough coding request into a scoped, t
 ## Workflow
 
 1. Preserve the user's task text and intent.
-2. For repo-aware work, pass the active project directory as `cwd` when the host exposes it. If the directory is unavailable, pass a known git remote as `repo.url`.
+2. For repo-aware work, inspect only the repository orientation files needed for the task, such as its agent rules, README, primary manifest, bounded file tree, and relevant module paths. Create a concise text brief named `repository-brief.md` and send it through `attachments`. Also pass a known git remote as `repo.url` for server-side saved-build matching. Never claim that a local directory path gave the remote service repository context.
 3. Call `promptworkshop_optimize_start` exactly once with `handoff_mode: "review_required"`, then keep its `run_id`.
 4. Poll only that run with `promptworkshop_optimize_wait` and `timeout_ms: 25000`. A timeout is resumable; it is not permission to create another run.
 5. Show changed progress between waits using these phases: **Build prompt**, **Structure harness**, **Harden workflow**, and **Final QA**.
@@ -22,7 +22,11 @@ Use the PromptWorkshop MCP tools to turn a rough coding request into a scoped, t
 ```json
 {
   "input": "<rough task>",
-  "cwd": "<active project directory when available>",
+  "repo": { "url": "<git remote when known>" },
+  "attachments": [
+    { "name": "repository-brief.md", "kind": "text", "text": "<bounded repo brief when repo-aware work was requested>" }
+  ],
+  "expected_attachments": { "count": 1, "names": ["repository-brief.md"] },
   "prompt_starter": "goal",
   "target_model": "claude-code",
   "handoff_mode": "review_required",
@@ -36,7 +40,7 @@ Use a fresh `idempotency_key` for a new user-intended run and reuse it only for 
 
 ## Attachments
 
-Remote MCP servers cannot read paths on the user's machine. Extract visible files with the host's file or multimodal tools, then send text entries through `attachments`. Include `expected_attachments` with the exact count and sanitized names. If any source cannot be read completely, stop instead of sending a partial batch.
+Remote MCP servers cannot read paths on the user's machine. Do not send `cwd` as a substitute for repository content. Extract visible files with the host's file or multimodal tools, then send text entries through `attachments`. Include `expected_attachments` with the exact count and sanitized names. If any source cannot be read completely, stop instead of sending a partial batch. Tell the user when repository text will be sent to PromptWorkshop.
 
 ## Failure handling
 
