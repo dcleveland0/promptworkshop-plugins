@@ -1,16 +1,14 @@
 ---
 name: workshop-audit
-description: Audit an agent result against a prior PromptWorkshop run. Use when the user invokes $workshop-audit or supplies a run id and downstream response for Result Audit.
+description: Audit an agent result against a prior PromptWorkshop run.
 ---
 
-# Workshop Audit
+# workshop-audit
 
-1. Parse the first argument as `run_id`.
-2. Parse an optional next token of `approved`, `rejected`, or `unsure` as `human_verdict`.
-3. Use the remaining text, or the immediately preceding agent response when clearly applicable, as `downstream_response`. Ask for it only when neither exists.
-4. Call native `promptworkshop_result_audit_start` exactly once; include downstream client/model when known. Do not pass `target_model_id`: durable audit uses the supported background judge.
-5. Preserve the returned `audit_id`. Call `promptworkshop_result_audit_wait` with the same `run_id` and `audit_id`, using `timeout_ms: 25000`. After `status: "timeout"`, repeat bounded waits with those same ids; never start a duplicate.
-6. Return verdict, scores, failure modes, revised-prompt recommendation, and evolution focus.
-7. Do not create a child run unless the user explicitly asks to adopt the revision. When they do, call `promptworkshop_result_audit_adopt` with the same `run_id` and `audit_id`, then return `open_in_promptworkshop`.
-8. If an intentional re-audit of byte-identical output is requested, pass a fresh `idempotency_key` to start. Omit it for ordinary retries so they replay safely.
-9. If any lifecycle MCP tool is unavailable, report the registration defect and stop. Never use a wrapper, REST fallback, or the blocking compatibility tool.
+Read ../promptworkshop/SKILL.md completely. Follow its shared authentication, privacy, transport, progress, failure, and output rules with these mode-specific requirements. Audit mode uses the audit lifecycle instead of optimize.
+
+Parse the first argument as run_id and an optional approved, rejected, or unsure token as human_verdict. Use the remaining text or the clearly applicable preceding agent response as downstream_response; ask only if neither exists.
+
+Check the audit start and wait tools and authentication before starting. Call promptworkshop_result_audit_start once, including downstream client/model when known. Do not pass target_model_id. Keep audit_id and poll promptworkshop_result_audit_wait with that same run_id and audit_id and timeout_ms: 25000. A timeout resumes the same audit; never start a duplicate. Report changed progress between waits, then verdict, scores, failure modes, revised-prompt recommendation, and evolution focus. Do not claim this audit executed tests or independently verified the implementation.
+
+Create a child run only after explicit approval to adopt the revision, by calling promptworkshop_result_audit_adopt with the same IDs. Return open_in_promptworkshop. A deliberate re-audit of byte-identical output uses a fresh idempotency_key; ordinary transport retries retain the same key or omit it to replay safely. Missing tools, denied permissions, typed preflight failures, and stalled queues stop the workflow. Never use a wrapper, REST fallback, or blocking compatibility tool.

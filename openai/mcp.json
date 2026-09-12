@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/mcp.schema.json",
   "mcpServers": {
-    "promptworkshop": {
+    "promptworkshop-marketplace": {
       "type": "streamable-http",
       "url": "https://www.promptworkshop.io/api/mcp/v1"
     }

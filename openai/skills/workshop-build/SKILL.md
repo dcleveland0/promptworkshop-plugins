@@ -1,20 +1,12 @@
 ---
 name: workshop-build
-description: Run a named PromptWorkshop saved build on a task. Use when the user invokes $workshop-build or explicitly selects a saved build slug.
+description: Run a named PromptWorkshop saved build on a task.
 ---
 
-# Workshop Build
+# workshop-build
 
-Read `../promptworkshop/SKILL.md` completely, then follow it with these requirements:
+Read ../promptworkshop/SKILL.md completely. Follow its shared authentication, privacy, transport, progress, failure, and output rules with these mode-specific requirements. Audit mode uses the audit lifecycle instead of optimize.
 
-1. Parse the first argument as `package_slug`; parse an optional `--level light|mid|full`; preserve the text after `--` exactly as the task. The level is a run-depth override, never a package slug.
-2. If no slug is supplied, call `promptworkshop_list_packages`, show saved build slugs, and stop without optimizing.
-3. Validate the slug before spending model tokens. If it is missing, show close available choices and stop.
-4. Call native `promptworkshop_optimize_start` exactly once with `package_slug`, optional `workflow_tier`, `include_workflow: true`, the real project `cwd`, and `handoff_mode: "review_required"`; then use the same bounded `promptworkshop_optimize_wait` loop required by the parent skill.
-5. Publish **Build prompt**, **Structure harness**, **Harden workflow**, and **Final QA**, name the selected build, show the hardened prompt, and wait for explicit approval.
-6. `workflow_tier` is independent from `package_slug`: light = fast prompt-only/no red-team, mid = prompt+harness/no red-team, full = prompt+harness+red-team. Never infer a tier from a slug, because light/mid/full are legal custom slugs.
-7. Never combine `package_slug` with `preset_slug`. Never use a wrapper or REST fallback.
+Parse the first argument as package_slug, an optional --level light|mid|full (or -1/-2/-3) as workflow_tier, and preserve the task after -- exactly. With no depth override use "smart"; never infer depth from a slug. Light is prompt-only, mid adds a harness, and full adds red-team review.
 
-Depth comes from the shared token grammar, never from the slug: with no digit pass `workflow_tier: "smart"`; `-1`, `-2`, `-3` pin `"light"`, `"mid"`, `"full"`. Never infer depth from the slug, because `light`, `mid`, and `full` are legal custom slugs. `--level light|mid|full` is still accepted as the older spelling of the same field.
-
-Progress tracking is mandatory: immediately after start returns, visibly report the `run_id`, then relay every changed `status_report.current_stage`, `percent`, and `message` between bounded wait calls. MCP notifications, tool spinners, and hidden tool activity are not a substitute for a visible assistant update.
+Call promptworkshop_list_packages before starting. If no slug was supplied, show available slugs and stop. If the slug is invalid, show close available choices and stop before model spend. Start once with the validated package_slug, workflow_tier, include_workflow: true, and handoff_mode: "review_required". For mid/full override the parent's format with "markdown_combined" and include_harness: true; for light use "markdown_prompt_only" and include_harness: false. For smart, omit format and include_harness so the resolved tier controls both. Never combine package_slug with preset_slug. A saved build alone does not authorize reading the repository. If repository context was requested, use the parent's bounded attachment contract and a real repo.url only as optional matching metadata. Name the selected build with the result and stop for approval.
