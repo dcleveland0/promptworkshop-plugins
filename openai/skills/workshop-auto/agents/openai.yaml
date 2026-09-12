@@ -1,0 +1,7 @@
+interface:
+  display_name: 'Workshop Auto'
+  short_description: 'Harden a task, then execute it'
+  default_prompt: 'Use $workshop-auto to harden and execute this task immediately.'
+
+policy:
+  allow_implicit_invocation: false

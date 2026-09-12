@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "name": "promptworkshop",
+  "displayName": "PromptWorkshop",
+  "version": "0.5.3",
+  "description": "Harden rough coding tasks into scoped, testable instructions before execution.",
+  "author": {
+    "name": "PromptWorkshop",
+    "email": "info@promptworkshop.io",
+    "url": "https://www.promptworkshop.io"
+  },
+  "homepage": "https://www.promptworkshop.io",
+  "repository": "https://github.com/dcleveland0/promptworkshop-plugins",
+  "license": "Proprietary",
+  "keywords": [
+    "prompt-engineering",
+    "coding-agents",
+    "mcp",
+    "claude-code"
+  ],
+  "mcpServers": "./.mcp.json"
+}

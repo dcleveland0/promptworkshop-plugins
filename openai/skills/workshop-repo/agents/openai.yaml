@@ -1,0 +1,7 @@
+interface:
+  display_name: 'Workshop Repo'
+  short_description: 'Harden with the current repo attached'
+  default_prompt: 'Use $workshop-repo to harden this task with the current repository.'
+
+policy:
+  allow_implicit_invocation: false

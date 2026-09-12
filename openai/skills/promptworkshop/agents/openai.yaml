@@ -1,0 +1,7 @@
+interface:
+  display_name: 'PromptWorkshop'
+  short_description: 'Harden prompts before agent execution'
+  default_prompt: 'Use $promptworkshop to harden this task for review.'
+
+policy:
+  allow_implicit_invocation: true

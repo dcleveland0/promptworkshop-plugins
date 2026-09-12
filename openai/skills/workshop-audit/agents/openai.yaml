@@ -1,0 +1,7 @@
+interface:
+  display_name: 'Workshop Audit'
+  short_description: 'Audit an agent result from a prior run'
+  default_prompt: 'Use $workshop-audit to audit this result against its PromptWorkshop run.'
+
+policy:
+  allow_implicit_invocation: false

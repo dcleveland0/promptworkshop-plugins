@@ -1,0 +1,7 @@
+interface:
+  display_name: 'Workshop'
+  short_description: 'Harden a task, then wait for approval'
+  default_prompt: 'Use $workshop to harden this task before execution.'
+
+policy:
+  allow_implicit_invocation: false

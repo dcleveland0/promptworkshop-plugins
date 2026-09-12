@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128" role="img" aria-label="PromptWorkshop">
+  <rect width="128" height="128" rx="30" fill="#0F172A"/>
+  <path d="M64 19l7.7 23.4L96 50l-24.3 7.6L64 81l-7.7-23.4L32 50l24.3-7.6L64 19z" fill="#60A5FA"/>
+  <path d="M89 78l4.8 14.2L108 97l-14.2 4.8L89 116l-4.8-14.2L70 97l14.2-4.8L89 78z" fill="#A78BFA"/>
+  <path d="M38 71l3.8 11.2L53 86l-11.2 3.8L38 101l-3.8-11.2L23 86l11.2-3.8L38 71z" fill="#34D399"/>
+</svg>

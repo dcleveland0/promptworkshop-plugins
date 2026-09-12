@@ -1,0 +1,44 @@
+{
+  "name": "promptworkshop",
+  "version": "0.5.3",
+  "description": "Harden rough coding tasks into scoped, testable instructions before execution.",
+  "author": {
+    "name": "PromptWorkshop",
+    "email": "info@promptworkshop.io",
+    "url": "https://www.promptworkshop.io"
+  },
+  "homepage": "https://www.promptworkshop.io",
+  "repository": "https://github.com/dcleveland0/promptworkshop-plugins",
+  "license": "Proprietary",
+  "keywords": [
+    "prompt-engineering",
+    "coding-agents",
+    "mcp",
+    "codex"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "PromptWorkshop",
+    "shortDescription": "Turn rough coding tasks into review-ready agent instructions",
+    "longDescription": "Harden rough coding tasks before implementation. PromptWorkshop adds explicit scope, constraints, failure handling, acceptance checks, and a review gate, with repo-aware workflows for larger changes.",
+    "developerName": "PromptWorkshop",
+    "category": "Coding",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write",
+      "MCP"
+    ],
+    "websiteURL": "https://www.promptworkshop.io",
+    "privacyPolicyURL": "https://www.promptworkshop.io/privacy",
+    "termsOfServiceURL": "https://www.promptworkshop.io/terms",
+    "defaultPrompt": [
+      "Harden this task before I start coding",
+      "Turn this rough request into an agent-ready brief",
+      "Audit this implementation task for missing constraints"
+    ],
+    "brandColor": "#2563EB",
+    "composerIcon": "./assets/promptworkshop.png",
+    "logo": "./assets/promptworkshop.png"
+  }
+}

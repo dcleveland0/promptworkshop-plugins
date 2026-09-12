@@ -1,0 +1,7 @@
+interface:
+  display_name: 'Workshop Build'
+  short_description: 'Run a named PromptWorkshop saved build'
+  default_prompt: 'Use $workshop-build to run a saved build on this task.'
+
+policy:
+  allow_implicit_invocation: false
