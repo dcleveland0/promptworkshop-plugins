@@ -1,11 +1,15 @@
 ---
 name: promptworkshop
-description: Harden rough coding tasks with PromptWorkshop before implementation; use when the user asks for PromptWorkshop or wants a task made precise, testable, or agent-ready.
+description: Check the saved PromptWorkshop preference on ordinary coding tasks; offer once if eligible. Never optimize or send task text before yes. Explicit /workshop and /workshop-auto requests always take precedence.
 ---
 
 # PromptWorkshop for ChatGPT and Codex
 
 Use the PromptWorkshop MCP tools to turn a rough coding request into a scoped, testable task. Select the tools belonging to this plugin's `promptworkshop-marketplace` MCP server in the host namespace. Do not substitute a similarly named local or separately configured PromptWorkshop connection. If the host cannot identify the owning plugin/server or multiple connections remain ambiguous, report the ambiguity and stop before reading files or calling tools. Authentication is handled by the host through the remote MCP connection. Never ask the user to paste credentials into chat.
+
+## Optional task suggestions
+
+For an ordinary substantive coding task, first read the saved level with `promptworkshop_get_suggestion_preference`; this sends no task text. If the preference cannot be read, do not guess or offer automatically. Use the shared rubric: **Complex** means multi-system work, migrations, or high uncertainty; **Average** means a multi-step feature or fix, or notable edge cases; **Basic** means any other substantive coding task. `off` never qualifies; each enabled level qualifies at its level and above. Skip chat, status checks, and explicit PromptWorkshop requests. Offer once, then wait for clear yes before sending task text or starting a run. A no continues the original task; an ambiguous reply gets one clarification. Explicit `/workshop` and `/workshop-auto` requests take precedence. Host activation varies, so automatic suggestions cannot be guaranteed in every host.
 
 ## Workflow
 

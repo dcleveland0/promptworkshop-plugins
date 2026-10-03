@@ -2,7 +2,7 @@
   "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
   "name": "promptworkshop",
   "displayName": "PromptWorkshop",
-  "version": "0.5.3",
+  "version": "0.5.5",
   "description": "Harden rough coding tasks into scoped, testable instructions before execution.",
   "author": {
     "name": "PromptWorkshop",

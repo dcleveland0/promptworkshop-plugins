@@ -1,0 +1,7 @@
+interface:
+  display_name: 'Workshop Help'
+  short_description: 'Learn to write a useful prompt'
+  default_prompt: 'Use $workshop-help to teach me how to write a better prompt.'
+
+policy:
+  allow_implicit_invocation: false

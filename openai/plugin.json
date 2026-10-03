@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "promptworkshop",
-  "version": "0.5.3",
+  "version": "0.5.5",
   "description": "Harden rough coding tasks into scoped, testable instructions before execution.",
   "author": {
     "name": "PromptWorkshop",
@@ -21,10 +21,10 @@
     "com.openai": {
       "interface": {
         "displayName": "PromptWorkshop",
-        "shortDescription": "Turn rough coding tasks into review-ready agent instructions",
-        "longDescription": "Harden rough coding tasks before implementation. PromptWorkshop adds explicit scope, constraints, failure handling, acceptance checks, and a review gate, with repo-aware workflows for larger changes.",
+        "shortDescription": "Harden coding tasks",
+        "longDescription": "Harden rough coding tasks before implementation. PromptWorkshop adds explicit scope, constraints, failure handling, acceptance checks, and a review gate, with repo-aware workflows for larger changes. Manage the account suggestion threshold (Off, Complex, Average, or Basic) in Settings → External API. Compatible hosts may check it on ordinary coding tasks and ask before starting; host activation varies, and task text is not sent before yes.",
         "developerName": "PromptWorkshop",
-        "category": "Coding",
+        "category": "Developer Tools",
         "capabilities": [
           "Interactive",
           "Read",
@@ -32,6 +32,7 @@
           "MCP"
         ],
         "websiteURL": "https://www.promptworkshop.io",
+        "supportURL": "https://www.promptworkshop.io/contact",
         "privacyPolicyURL": "https://www.promptworkshop.io/privacy",
         "termsOfServiceURL": "https://www.promptworkshop.io/terms",
         "defaultPrompt": [
@@ -42,6 +43,65 @@
         "brandColor": "#2563EB",
         "composerIcon": "./assets/promptworkshop.png",
         "logo": "./assets/promptworkshop.png"
+      },
+      "onboardingSkill": "./skills/promptworkshop/SKILL.md",
+      "review": {
+        "test_cases": {
+          "positive": [
+            {
+              "description": "Harden a bounded coding fix",
+              "prompt": "Use PromptWorkshop to harden this task: fix a failing billing test without changing unrelated files.",
+              "tools_triggered": "promptworkshop_optimize_start, promptworkshop_optimize_wait",
+              "expected_behavior": "Show run progress, return a scoped prompt with checks, and wait for approval before coding."
+            },
+            {
+              "description": "Prepare a feature brief",
+              "prompt": "Use PromptWorkshop to turn this into an agent-ready task: add resumable report exports.",
+              "tools_triggered": "promptworkshop_optimize_start, promptworkshop_optimize_wait",
+              "expected_behavior": "Return a prompt with scope, failure handling, and acceptance checks for resumable exports."
+            },
+            {
+              "description": "Clarify a migration request",
+              "prompt": "Use PromptWorkshop to prepare this migration: move settings to the new entitlement hook.",
+              "tools_triggered": "promptworkshop_optimize_start, promptworkshop_optimize_wait",
+              "expected_behavior": "Identify migration constraints and verification steps without making repository changes."
+            },
+            {
+              "description": "Harden an API integration",
+              "prompt": "Use PromptWorkshop to prepare an API integration task with timeout and retry behavior.",
+              "tools_triggered": "promptworkshop_optimize_start, promptworkshop_optimize_wait",
+              "expected_behavior": "Return a prompt covering retries, errors, tests, and clear completion criteria."
+            },
+            {
+              "description": "Prepare a task for a coding agent",
+              "prompt": "Use PromptWorkshop to harden this coding task for Codex: add cancellation for queued jobs.",
+              "tools_triggered": "promptworkshop_optimize_start, promptworkshop_optimize_wait",
+              "expected_behavior": "Return reviewable instructions for cancellation behavior and edge cases."
+            }
+          ],
+          "negative": [
+            {
+              "description": "Unrelated creative writing",
+              "prompt": "Write a short poem about launch day.",
+              "expected_behavior": "Answer directly without calling PromptWorkshop."
+            },
+            {
+              "description": "Unrelated explanation",
+              "prompt": "Explain what MCP is.",
+              "expected_behavior": "Explain directly without calling PromptWorkshop."
+            },
+            {
+              "description": "No consent to send task text",
+              "prompt": "Do not send this task to PromptWorkshop. Just list questions I should answer first.",
+              "expected_behavior": "Respect the instruction and do not call PromptWorkshop."
+            }
+          ]
+        },
+        "commerce": false,
+        "commerce_description": "PromptWorkshop does not sell products or process payments through this plugin."
+      },
+      "publication": {
+        "release_notes": "Initial public plugin for ChatGPT, Dots, and Codex. Harden coding tasks with a review step before execution."
       }
     }
   }
