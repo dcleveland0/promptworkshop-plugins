@@ -1,0 +1,7 @@
+interface:
+  display_name: 'Workshop Loop'
+  short_description: 'Run and audit a bounded hosted task loop'
+  default_prompt: 'Use $workshop-loop to execute and audit this task for up to five rounds.'
+
+policy:
+  allow_implicit_invocation: false

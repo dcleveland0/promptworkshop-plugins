@@ -1,6 +1,6 @@
 {
   "name": "promptworkshop",
-  "version": "0.5.5",
+  "version": "0.5.6",
   "description": "Harden rough coding tasks into scoped, testable instructions before execution.",
   "author": {
     "name": "PromptWorkshop",

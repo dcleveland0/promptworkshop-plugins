@@ -21,6 +21,10 @@ For an ordinary substantive coding task, first read the saved level with `prompt
 6. When the run succeeds, show only the hardened prompt under **Hardened prompt for review**, along with the run link and token usage when returned.
 7. Stop for explicit approval before implementing. Skip this review stop only when the user requested automatic execution before the run; in that case use `handoff_mode: "auto_execute"`.
 
+## Host-managed five-round loop
+
+Use the dedicated `workshop-loop` skill for explicit `/workshop-loop` invocations. It runs up to five fresh full-depth optimization rounds, submits each exact authorized downstream response to Result Audit once, and on `needs_revision` checks the exact nonempty `audit.revised_prompt` against the original scope before adopting for lineage and starting the next run with that exact input. On round five, report the revision and stop before adoption or another run. A full five-round cycle can incur charges for up to five optimize runs and five Result Audits, plus host execution. The separate `promptworkshop_loop_status` MCP tool reads durable three-role Loop state when given a Loop ID; this host-managed workflow does not create that ID. Result Audit does not run code or independently verify tests. Stop before audit if exact output contains sensitive material the user has not authorized; never redact or summarize it and call it exact.
+
 ## Minimal start call
 
 ```json
